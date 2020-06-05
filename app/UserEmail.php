@@ -16,6 +16,11 @@ class UserEmail extends Model
         return $this->belongsTo('App\Email');
     }
 
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
     public function brouillon()
     {
         return $this->hasOne('App\Brouillon');

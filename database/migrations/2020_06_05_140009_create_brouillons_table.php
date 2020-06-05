@@ -17,6 +17,8 @@ class CreateBrouillonsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_email_id');
             $table->timestamps();
+
+            $table->foreign('user_email_id')->references('id')->on('user_emails');
         });
     }
 

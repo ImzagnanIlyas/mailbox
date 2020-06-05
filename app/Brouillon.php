@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brouillon extends Model
 {
-    public function UserEmail()
+    public function userEmail()
     {
         return $this->belongsTo('App\UserEmail');
     }

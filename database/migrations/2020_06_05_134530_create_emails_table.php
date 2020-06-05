@@ -15,11 +15,12 @@ class CreateEmailsTable extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
-            $table->json('destinataire');
-            $table->json('cc');
-            $table->longText('contenu');
-            $table->json('files');
-            $table->timestamps('envoi');
+            $table->json('receivers');
+            $table->json('cc')->nullable();
+            $table->longText('content');
+            $table->json('files')->nullable();
+            $table->timestamp('send');
+            $table->unsignedBigInteger('email_id')->nullable(); /* id de l'email parent si ce email est une réponse */
             $table->timestamps();
         });
     }

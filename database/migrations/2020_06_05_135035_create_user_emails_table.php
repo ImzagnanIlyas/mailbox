@@ -19,12 +19,16 @@ class CreateUserEmailsTable extends Migration
             $table->unsignedBigInteger('email_id');
             $table->text('user_type'); // User_Type = Sender | Receiver | CC
             $table->text('state'); // State = Draft | Sent | Received | Read
-            $table->boolean('important');
-            $table->boolean('archived');
-            $table->boolean('trashed');
-            $table->boolean('deleted');
-            $table->text('categorie');
+            $table->boolean('important')->default(0);
+            $table->boolean('archived')->default(0);
+            $table->boolean('trashed')->default(0);
+            $table->boolean('deleted')->default(0);
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('email_id')->references('id')->on('emails');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
