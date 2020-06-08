@@ -1,0 +1,19 @@
+.sidebar.shrink #legend{
+    display: none;
+}
+#searchForm{
+    background: #f1f3f4;
+    border: 1px solid transparent;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.contentSimple{
+    padding-left: 256px;
+    padding-top: 72px;
+}
+.contentToggled{
+    padding-left: 96px;
+    padding-top: 72px;
+}
+
