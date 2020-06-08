@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Boîte mail</title>
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Mailbox</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
@@ -20,8 +20,10 @@
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
     <!-- theme stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/layout/style.default.css') }}" id="theme-stylesheet">
+
     <!-- Custom stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/layout/custom.css') }}">
 </head>
@@ -30,7 +32,7 @@
     <header class="header">
       <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow" style="position: fixed;top: 0;left: 0;width: 100%;z-index: 999;">
         <button class="bg-transparent border-0 sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i class="fas fa-bars"></i></button>
-        <a href="#" class="font-weight-bold text-uppercase text-base">Mailbox</a>
+        <a href="#" class="font-weight-bold text-uppercase text-base">boîte mail</a>
         <form id="searchForm" class="col-6 ml-5 d-none d-lg-block">
             <div class="form-group d-flex justofy-content-between position-relative mb-0">
                 <button type="submit" class="bg-transparent border-0 pl-0 py-2"><i class="fas fa-search text-gray"></i></button>
@@ -39,7 +41,7 @@
             </div>
         </form>
         <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
-          <li class="nav-item dropdown mr-3"><a id="notifications" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
+          {{-- <li class="nav-item dropdown mr-3"><a id="notifications" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
             <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
                 <div class="d-flex align-items-center">
                   <div class="icon icon-sm bg-violet text-white"><i class="fab fa-twitter"></i></div>
@@ -67,12 +69,18 @@
                 </div></a>
               <div class="dropdown-divider"></div><a href="#" class="dropdown-item text-center"><small class="font-weight-bold headings-font-family text-uppercase">View all notifications</small></a>
             </div>
-          </li>
-          <li class="nav-item dropdown ml-auto"><a id="userInfo" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{{ asset('img/user.png') }}" alt="user img" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow bg-primary"></a>
-            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">IMZAGNAN Ilyas</strong><small>Développeur web</small></a>
-              <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Réglages</a><a href="#" class="dropdown-item">Journal d'activité</a>
-              <div class="dropdown-divider"></div><a href="login.html" class="dropdown-item">Se déconnecter</a>
-            </div>
+          </li> --}}
+          <li class="nav-item dropdown ml-auto"><a id="userInfo" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+                <img src="{{ asset('img/user.png') }}" alt="user img" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow bg-primary"></a>
+                <div aria-labelledby="userInfo" class="dropdown-menu">
+                    <a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">{{ Auth::user()->name }}</strong><small>{{ Auth::user()->post }}</small></a>
+                    {{-- <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Réglages</a><a href="#" class="dropdown-item">Journal d'activité</a> --}}
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"class="dropdown-item">
+                        <i class="fas fa-sign-out-alt text-gray-400"></i>&nbsp;Se déconnecter
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+                </div>
           </li>
         </ul>
       </nav>
@@ -84,11 +92,11 @@
           <button type="button" class="btn btn-primary shadow"><i class="fas fa-edit"></i><span id="legend" class="ml-2">Nouveau message</span></button>
         </div>
         <ul class="sidebar-menu list-unstyled">
-          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted active"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-inbox m-auto text-gray"></i></span><span id="legend">Boîte de réception</span></a></li>
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted active"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-inbox m-auto text-gray"></i></span><span id="legend">Tous les messages</span></a></li>
           <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-star m-auto text-gray"></i></span><span id="legend">Important</span></a></li>
-          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-paper-plane m-auto text-gray"></i></span><span id="legend">messages envoyés</span></a></li>
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-paper-plane m-auto text-gray"></i></span><span id="legend">Messages envoyés</span></a></li>
           <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-file m-auto text-gray"></i></span><span id="legend">Brouillions</span></a></li>
-          <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Catégories</span></a>
+          <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Mes catégories</span></a>
             <div id="pages" class="collapse" style="max-height: 30vh;overflow: auto;">
               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
                 <!-- <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Sport</span></a></li> -->
@@ -96,8 +104,8 @@
               </ul>
             </div>
           </li>
-          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-envelope m-auto text-gray"></i></span><span id="legend">Tous les messages</span></a></li>
-          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-archive m-auto text-gray"></i></span><span id="legend">Archives</span></a></li>
+          {{-- <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-envelope m-auto text-gray"></i></span><span id="legend">Boîte de réception</span></a></li> --}}
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-archive m-auto text-gray"></i></span><span id="legend">Messages archivés</span></a></li>
           <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-trash m-auto text-gray"></i></span><span id="legend">Corbeille</span></a></li>
         </ul>
       </div>

@@ -32,7 +32,7 @@
             </div>
         </form>
         <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
-          <li class="nav-item dropdown mr-3"><a id="notifications" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
+          {{-- <li class="nav-item dropdown mr-3"><a id="notifications" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
             <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
                 <div class="d-flex align-items-center">
                   <div class="icon icon-sm bg-violet text-white"><i class="fab fa-twitter"></i></div>
@@ -60,11 +60,15 @@
                 </div></a>
               <div class="dropdown-divider"></div><a href="#" class="dropdown-item text-center"><small class="font-weight-bold headings-font-family text-uppercase">View all notifications</small></a>
             </div>
-          </li>
+          </li> --}}
           <li class="nav-item dropdown ml-auto"><a id="userInfo" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="{{ asset('img/user.png') }}" alt="user img" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow bg-primary"></a>
-            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">IMZAGNAN Ilyas</strong><small>Développeur web</small></a>
-              <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Réglages</a><a href="#" class="dropdown-item">Journal d'activité</a>
-              <div class="dropdown-divider"></div><a href="login.html" class="dropdown-item">Se déconnecter</a>
+            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">{{ Auth::user()->name }}</strong><small>{{ Auth::user()->post }}</small></a>
+              {{-- <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Réglages</a><a href="#" class="dropdown-item">Journal d'activité</a> --}}
+              <div class="dropdown-divider"></div><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"class="dropdown-item">
+                <i class="fas fa-sign-out-alt text-gray-400"></i>&nbsp;Se déconnecter</a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
             </div>
           </li>
         </ul>
@@ -81,13 +85,10 @@
           <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-star m-auto text-gray"></i></span><span id="legend">Important</span></a></li>
           <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-paper-plane m-auto text-gray"></i></span><span id="legend">messages envoyés</span></a></li>
           <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-file m-auto text-gray"></i></span><span id="legend">Brouillions</span></a></li>
-          <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Catégories</span></a>
+          <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Mes catégories</span></a>
             <div id="pages" class="collapse" style="max-height: 30vh;overflow: auto;">
               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Sport</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
