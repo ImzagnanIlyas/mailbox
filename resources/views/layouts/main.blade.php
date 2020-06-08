@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bubbly - Boootstrap 4 Admin template by Bootstrapious.com</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
-    <!-- App CSS-->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <!-- Google fonts - Popppins for copy-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Mailbox</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- Google fonts - Popppins for copy -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
-    <!-- theme stylesheet-->
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <!-- theme stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/layout/style.default.css') }}" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes-->
+    <!-- Custom stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/layout/custom.css') }}">
-  </head>
-  <body>
+</head>
+<body>
     <!-- navbar-->
     <header class="header">
       <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow" style="position: fixed;top: 0;left: 0;width: 100%;z-index: 999;">
@@ -84,13 +91,7 @@
           <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Catégories</span></a>
             <div id="pages" class="collapse" style="max-height: 30vh;overflow: auto;">
               <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Sport</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
-                <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Info</span></a></li>
+                <!-- <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Sport</span></a></li> -->
                 <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-plus m-auto text-gray"></i></span><span>Créer une catégorie</span></a></li>
               </ul>
             </div>
@@ -103,8 +104,9 @@
     </div>
     <!-- content -->
     <div id="content" class="page-holder w-100 d-flex flex-wrap contentSimple">
-        <div class="container-fluid px-xl-5">
+        <div id="app" class="container-fluid px-xl-5">
             <!-- content here -->
+            @yield('content')
         </div>
     </div>
 
@@ -125,12 +127,10 @@
       </form>
     </div>
 
-    <!-- App JS -->
-    <script src="{{ asset('js/app.js') }}"></script>
     <!-- Jquery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <!-- Layout JS -->
     <script src="{{ asset('js/layout.js') }}"></script>
-  </body>
+</body>
 </html>
