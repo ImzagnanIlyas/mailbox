@@ -35,7 +35,7 @@ Vue.use(IconsPlugin)
 // Laravel-Vue-Pagination
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('email-list', require('./components/email-list.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
