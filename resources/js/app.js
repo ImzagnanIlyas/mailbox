@@ -8,15 +8,21 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// Vuetify
+import vuetify from '../plugins/vuetify'
+
 // VueRouter
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
+
 // Vue2Editor
 import Vue2Editor from "vue2-editor";
 Vue.use(Vue2Editor);
+
 // BootstrapVue
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
+
 // BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
@@ -35,7 +41,47 @@ Vue.use(IconsPlugin)
 // Laravel-Vue-Pagination
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import Dashboard from './Admin pages/Dashboard'
+import Settings from './Admin pages/Settings'
+import Users from './Admin pages/Users'
+import Roles from './Admin pages/Roles'
+import Permissions from './Admin pages/Permissions'
+import Activities from './Admin pages/Activities'
+
+Vue.component('admin', require('./components/Admin/Admin.vue').default);
+
+const routes = [
+    {
+        path: '/admin/',
+        component: Dashboard
+    },
+    {
+        path: '/admin/users',
+        component: Users
+    },
+    {
+        path: '/admin/roles',
+        component: Roles
+    },
+    {
+        path: '/admin/permissions',
+        component: Permissions
+    },
+    {
+        path: '/admin/settings',
+        component: Settings
+    },
+    {
+        path: '/admin/activities',
+        component: Activities
+    }
+  ];
+
+  const router = new VueRouter({
+    mode: 'history',
+    routes
+  })
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -44,5 +90,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
+    vuetify,
     el: '#app',
+    router
 });
