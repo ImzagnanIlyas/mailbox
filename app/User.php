@@ -37,6 +37,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The models that should be exist on arrays.
+     *
+     * @var array
+     */
+    protected $with = ['categories'];
+
     public function userEmails()
     {
         return $this->hasMany('App\UserEmail');
