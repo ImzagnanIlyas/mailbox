@@ -30,27 +30,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json("bibi");
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email'=>'required|email',
+        //     'password'=>'required',
+        //  ]);
 
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required|email',
-            'password'=>'required',
-         ]);
+        $user= User::create([
+            'name'=> $request->name,
+            'birthday'=> $request->birthday,
+            'gender'=> $request->gender,
+            'phone'=> $request->phone,
+            'post'=> $request->post,
+            'type'=> $request->type,
+            'email'=> $request->email,
+            'password'=> bcrypt($request->password)
+        ]);
 
-         $user= User::create([
-             'name'=> $request->name,
-             'email'=> $request->email,
-             'password'=> bcrypt($request->password)
-         ]);
+        if ($request->has('role')) {
+             $user->assignRole($request->role['name']);
+        }
 
-        //  if ($request->has('role')) {
-        //      $user->assignRole($request->role['name']);
-        //  }
-
-        //  if ($request->has('permissions')) {
-        //      $user->givePermissionTo(collect($request->permissions)->pluck('id')->toArray());
-        //  }
+        if ($request->has('permissions')) {
+             $user->givePermissionTo(collect($request->permissions)->pluck('id')->toArray());
+        }
 
         // $user = new User();
         // $user->name = $request->name;
@@ -58,7 +61,7 @@ class UserController extends Controller
         // $user->password =  bcrypt($request->password);
         // $user->save();
 
-         return response(['message'=>'User Created', 'user'=>$user]);
+        return response(['message'=>'User Created', 'user'=>$user]);
     }
 
     /**
@@ -70,14 +73,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required|email',
-        ]);
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email'=>'required|email',
+        // ]);
 
         $user->update([
             'name'=> $request->name,
+            'birthday'=> $request->birthday,
+            'gender'=> $request->gender,
+            'phone'=> $request->phone,
+            'post'=> $request->post,
+            'type'=> $request->type,
             'email'=> $request->email,
+            'email'=> $request->email,
+
         ]);
 
         if ($request->has('role')) {
