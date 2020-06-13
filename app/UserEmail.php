@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserEmail extends Model
 {
+    protected $appends = ['sender'];
+
+    /**
+     * Laravel eloquent relationships
+     */
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -30,4 +36,15 @@ class UserEmail extends Model
     {
         return $this->hasOne('App\Corbeille');
     }
+
+    /**
+     * Custom attributes
+     */
+
+     public function getSenderAttribute(){
+        $senderId = UserEmail::whereEmailId($this->email_id)->whereUserType('sender')->first()->user_id;
+        return User::find($senderId);
+     }
+
+
 }

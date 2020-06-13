@@ -1,6 +1,7 @@
 .sidebar.shrink #legend{
     display: none;
 }
+
 #searchForm{
     background: #f1f3f4;
     border: 1px solid transparent;
@@ -17,3 +18,11 @@
     padding-top: 72px;
 }
 
+.dropdown-item-tag:hover, .dropdown-item-tag:focus {
+    color: #6c757d !important;
+    background-color: #f8f9fa !important;
+}
+
+.dropdown-item-tag:hover i, .dropdown-item-tag:focus i {
+    color: #6c757d !important;
+}

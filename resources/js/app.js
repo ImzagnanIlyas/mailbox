@@ -26,6 +26,12 @@ Vue.use(BootstrapVue)
 // BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+import Dashboard from './Admin pages/Dashboard'
+import Settings from './Admin pages/Settings'
+import Users from './Admin pages/Users'
+import Roles from './Admin pages/Roles'
+import Permissions from './Admin pages/Permissions'
+import Activities from './Admin pages/Activities'
 
 /**
  * The following block of code may be used to automatically register your
@@ -41,12 +47,7 @@ Vue.use(IconsPlugin)
 // Laravel-Vue-Pagination
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-import Dashboard from './Admin pages/Dashboard'
-import Settings from './Admin pages/Settings'
-import Users from './Admin pages/Users'
-import Roles from './Admin pages/Roles'
-import Permissions from './Admin pages/Permissions'
-import Activities from './Admin pages/Activities'
+Vue.component('email-list', require('./components/email-list.vue').default);
 
 Vue.component('admin', require('./components/Admin/Admin.vue').default);
 

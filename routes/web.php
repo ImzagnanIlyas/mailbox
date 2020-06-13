@@ -22,9 +22,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/test', function () {
-    return view('test');
+Route::get('/inbox', function () {
+    return view('inbox');
 });
+
+/**
+ * Email routes
+ */
+
+Route::resource('/email', 'EmailController');
 
 Route::any('/admin/{any?}', 'Admin\AdminController@index')->where('any', '.*');// ->middleware('auth');
 
