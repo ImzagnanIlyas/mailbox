@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function index(){
-
-        return view('Admin/admin');
+        if (auth()->user()->type == 't1'){
+            return view('Admin/admin');
+        }
+        abort(404);
     }
 }

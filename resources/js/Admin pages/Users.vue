@@ -156,7 +156,6 @@
         { text: 'Post', value: 'post'},
         { text: 'Email', value: 'email'},
         { text: 'Role', value: 'role.name'},
-        { text: 'Created at', value: 'created_at'},
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       tableData: [],
