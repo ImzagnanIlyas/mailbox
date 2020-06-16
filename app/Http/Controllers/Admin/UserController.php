@@ -42,7 +42,7 @@ class UserController extends Controller
             'gender'=> $request->gender,
             'phone'=> $request->phone,
             'post'=> $request->post,
-            'type'=> $request->type,
+            'service'=> $request->service,
             'email'=> $request->email,
             'password'=> bcrypt($request->password)
         ]);
@@ -84,7 +84,7 @@ class UserController extends Controller
             'gender'=> $request->gender,
             'phone'=> $request->phone,
             'post'=> $request->post,
-            'type'=> $request->type,
+            'service'=> $request->service,
             'email'=> $request->email,
             'email'=> $request->email,
 
