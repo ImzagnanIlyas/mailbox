@@ -48,6 +48,7 @@ import Activities from './Admin pages/Activities'
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 Vue.component('email-list', require('./components/email-list.vue').default);
+Vue.component('new-email', require('./components/new-email.vue').default);
 
 Vue.component('admin', require('./components/Admin/Admin.vue').default);
 
@@ -93,5 +94,8 @@ const routes = [
 const app = new Vue({
     vuetify,
     el: '#app',
-    router
+    router,
+    data: {
+        newEmailComponentKey:0
+    }
 });

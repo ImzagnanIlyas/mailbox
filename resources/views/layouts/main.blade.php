@@ -88,9 +88,8 @@
         <!-- Sidebar -->
         <div class="d-flex align-items-stretch" style="position: fixed;top: 72px;left: 0;height: 100%;z-index: 998;overflow: auto;">
         <div id="sidebar" class="sidebar py-3">
-            <div id="newEmail" class="text-gray-400 text-uppercase px-3 px-lg-3 py-4 font-weight-bold small headings-font-family">
-            <button type="button" class="btn btn-primary shadow"><i class="fas fa-edit"></i><span id="legend" class="ml-2">Nouveau message</span></button>
-            </div>
+            <new-email :key="newEmailComponentKey"></new-email>
+            <button id="render" @click="newEmailComponentKey += 1" hidden></button>
             <ul class="sidebar-menu list-unstyled">
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted active"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-inbox m-auto text-gray"></i></span><span id="legend">Boîte de réception</span></a></li>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-star m-auto text-gray"></i></span><span id="legend">Important</span></a></li>
