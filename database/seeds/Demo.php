@@ -47,7 +47,7 @@ class Demo extends Seeder
             'type' => 't1',
             'post' => 'p1',
             'email' => 'a@a.a',
-            'password' => 'aaaa',
+            'password' => bcrypt('aaaa'),
         ]);
         $user->assignRole($role1);
 
@@ -59,7 +59,7 @@ class Demo extends Seeder
             'type' => 't2',
             'post' => 'p2',
             'email' => 's@s.s',
-            'password' => 'ssss',
+            'password' => bcrypt('ssss'),
         ]);
         $user->assignRole($role2);
 
@@ -71,7 +71,7 @@ class Demo extends Seeder
             'type' => 't1',
             'post' => 'p1',
             'email' => 'z@z.z',
-            'password' => 'zzzz',
+            'password' => bcrypt('zzzz'),
         ]);
         $user->assignRole($role3);
     }
