@@ -14,7 +14,7 @@ class AddColumnObjectToEmailsTable extends Migration
     public function up()
     {
         Schema::table('emails', function (Blueprint $table) {
-            $table->text('object')->after('cc');
+            $table->text('object')->nullable()->after('cc');
         });
     }
 
