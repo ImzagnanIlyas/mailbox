@@ -47,7 +47,9 @@ import Activities from './Admin pages/Activities'
 // Laravel-Vue-Pagination
 Vue.component('pagination', require('laravel-vue-pagination'));
 
+Vue.component('email-section', require('./components/email-section.vue').default);
 Vue.component('email-list', require('./components/email-list.vue').default);
+Vue.component('show-email', require('./components/show-email.vue').default);
 Vue.component('new-email', require('./components/new-email.vue').default);
 
 Vue.component('admin', require('./components/Admin/Admin.vue').default);

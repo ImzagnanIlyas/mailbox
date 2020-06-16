@@ -32,6 +32,7 @@ Route::get('/inbox', function () {
 
 Route::resource('/email', 'EmailController');
 Route::resource('/new-email', 'NewEmailController')->only(['index', 'store', 'update', 'destroy']);
+Route::resource('/show-email', 'ShowEmailController');
 
 Route::any('/admin/{any?}', 'Admin\AdminController@index')->where('any', '.*')->middleware('auth');
 

@@ -10,5 +10,5 @@
 @endsection
 
 @section('content')
-<email-list></email-list>
+<email-section></email-section>
 @endsection

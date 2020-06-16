@@ -223,7 +223,7 @@ export default {
     },
 
     mounted() {
-        console.log('Component mounted.')
+        console.log('new-email component mounted.')
         this.getOptions()
     },
 

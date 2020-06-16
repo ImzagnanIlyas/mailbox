@@ -56,7 +56,7 @@
             <div class="row clearfix border-top" style="margin-top: -15px;">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <ul class="mail_list list-group list-unstyled">
-                        <li v-for="userEmail in emails.data" :key="userEmail.id" :class="[(userEmail.state == 'read') ? 'read' : 'unread border-primary', (checkedMails.includes(userEmail.id)) ? 'bg-selected' : '']" class="list-group-item">
+                        <li v-for="userEmail in emails.data" :key="userEmail.id" @click="$emit('showEmail', userEmail)" :class="[(userEmail.state == 'read') ? 'read' : 'unread border-primary', (checkedMails.includes(userEmail.id)) ? 'bg-selected' : '']" class="list-group-item" style="cursor: pointer;">
                             <div class="media flex-wrap">
                                 <div class="pull-left">
                                     <div class="controls">
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="media-body">
                                     <div class="media-heading">
-                                        <a href="#" class="m-r-10">{{ userEmail.email.object }}</a><span v-if="userEmail.category_id" class="badge bg-secondary text-white ml-1">{{ userEmail.category.title }}</span>
+                                        <a role="button" tabindex="0" class="m-r-10">{{ userEmail.email.object }}</a><span v-if="userEmail.category_id" class="badge bg-secondary text-white ml-1">{{ userEmail.category.title }}</span>
                                         <small class="float-right text-muted"><time class="hidden-sm-down">{{ userEmail.email.send_at_short }}</time></small>
                                     </div>
                                     <p v-if="userEmail.email.content" class="msg">{{ stripHtml(userEmail.email.content).substring(0, 100) }}<span v-show="userEmail.email.content.length > 99">...</span><i v-show="userEmail.email.files" class="fas fa-paperclip ml-3"></i></p>
@@ -101,7 +101,7 @@ export default {
     },
 
     mounted() {
-        console.log('Component mounted.')
+        console.log('email-list component mounted.')
         this.getResults();
     },
 
