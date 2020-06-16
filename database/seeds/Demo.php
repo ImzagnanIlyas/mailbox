@@ -40,36 +40,36 @@ class Demo extends Seeder
 
         // create demo users
         $user = Factory(App\User::class)->create([
-            'name' => 'Admin Ilyas',
+            'name' => 'IMZAGNAN Ilyas',
             'birthday' => '1989-06-11',
-            'gender' => 'H',
-            'phone' => '01234',
-            'type' => 't1',
-            'post' => 'p1',
+            'gender' => 'Homme',
+            'phone' => '0611111111',
+            'service' => 'Service réseau',
+            'post' => 'Chef de service réseau',
             'email' => 'a@a.a',
             'password' => bcrypt('aaaa'),
         ]);
         $user->assignRole($role1);
 
         $user = Factory(App\User::class)->create([
-            'name' => 'Moderator Saad',
+            'name' => 'ESSAMAKI Saad',
             'birthday' => '1987-05-15',
-            'gender' => 'H',
-            'phone' => '01234',
-            'type' => 't2',
-            'post' => 'p2',
+            'gender' => 'Homme',
+            'phone' => '0622222222',
+            'service' => 'Service mécanique',
+            'post' => 'Chef de service mécanique',
             'email' => 's@s.s',
             'password' => bcrypt('ssss'),
         ]);
         $user->assignRole($role2);
 
         $user = Factory(App\User::class)->create([
-            'name' => 'User Zayn',
+            'name' => 'ELGUEZDI Zinelabidine',
             'birthday' => '1989-08-17',
-            'gender' => 'H',
-            'phone' => '01234',
-            'type' => 't1',
-            'post' => 'p1',
+            'gender' => 'Homme',
+            'phone' => '0633333333',
+            'service' => 'Service developpement',
+            'post' => 'Chef de service developpement',
             'email' => 'z@z.z',
             'password' => bcrypt('zzzz'),
         ]);

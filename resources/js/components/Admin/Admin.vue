@@ -36,12 +36,12 @@
                     <v-list-item-title>Roles</v-list-item-title>
                 </v-list-item>
 
-                <v-list-item color="teal" class="text-decoration-none" exact to="/admin/permissions">
+                <!-- <v-list-item color="teal" class="text-decoration-none" exact to="/admin/permissions">
                     <v-list-item-icon>
                         <v-icon>fas fa-key</v-icon>
                     </v-list-item-icon>
                     <v-list-item-title>Permissions</v-list-item-title>
-                </v-list-item>
+                </v-list-item> -->
 
                 <v-list-item color="teal" class="text-decoration-none" exact to="/admin/activities">
                     <v-list-item-icon>
@@ -54,7 +54,7 @@
                     <v-list-item-icon>
                         <v-icon>fas fa-user-circle</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>Profile</v-list-item-title>
+                    <v-list-item-title>My profile</v-list-item-title>
                 </v-list-item>
 
             </v-list>
@@ -76,7 +76,7 @@
             <v-container class="fill-height" fluid>
                 <v-layout justify-center>
                     <v-flex shrink>
-                        <router-view></router-view>
+                        <router-view :user="user"></router-view>
                     </v-flex>
                 </v-layout>
             </v-container>

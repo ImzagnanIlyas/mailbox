@@ -3,13 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function index(){
-        if (auth()->user()->type == 't1'){
-            return view('Admin/admin');
+
+        $user = auth()->user();
+        $roles = $user->getRoleNames();
+
+        foreach ($roles as $role){
+            if ($role == "admin" || $role == "moderator"){
+                return view('Admin/admin');
+            }
         }
         abort(404);
     }
