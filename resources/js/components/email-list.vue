@@ -75,7 +75,7 @@
                                         <a href="#" class="m-r-10">{{ userEmail.email.object }}</a><span v-if="userEmail.category_id" class="badge bg-secondary text-white ml-1">{{ userEmail.category.title }}</span>
                                         <small class="float-right text-muted"><time class="hidden-sm-down">{{ userEmail.email.send_at_short }}</time></small>
                                     </div>
-                                    <p class="msg">{{ userEmail.email.content.substring(0, 100) }}<span v-show="userEmail.email.content.length > 99">...</span><i v-show="userEmail.email.files" class="fas fa-paperclip ml-3"></i></p>
+                                    <p v-if="userEmail.email.content" class="msg">{{ stripHtml(userEmail.email.content).substring(0, 100) }}<span v-show="userEmail.email.content.length > 99">...</span><i v-show="userEmail.email.files" class="fas fa-paperclip ml-3"></i></p>
                                 </div>
                             </div>
                         </li>
@@ -128,8 +128,13 @@ export default {
             .catch(err => {
                 console.error(err);
             })
-		},
+        },
 
+        stripHtml(html){
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || "";
+        },
         /**
         ==============================
             Select functions
