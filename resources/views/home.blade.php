@@ -13,7 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    You are logged in!
+                    You are logged in! <br>
+                    <a href="/admin">
+                        Admin
+                    </a>
+                    <a href="/inbox">
+                        Inbox
+                    </a>
                 </div>
             </div>
         </div>

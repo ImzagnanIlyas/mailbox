@@ -69,6 +69,7 @@
                             shaped
                         ></v-text-field>
                         </v-col>
+
                         <v-col cols="12" sm="6">
                         <v-text-field
                             v-model="user.roles[0].name"

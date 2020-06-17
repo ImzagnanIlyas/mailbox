@@ -10,5 +10,7 @@
 @endsection
 
 @section('content')
+<div class="container">
 <email-section></email-section>
+</div>
 @endsection
