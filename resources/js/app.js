@@ -26,6 +26,8 @@ Vue.use(BootstrapVue)
 // BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+import 'css-file-icons/build/css-file-icons.css'
+
 import Dashboard from './Admin pages/Dashboard'
 import Settings from './Admin pages/Settings'
 import Users from './Admin pages/Users'

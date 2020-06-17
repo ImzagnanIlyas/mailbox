@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Email extends Model
 {
-    protected $appends = ['send_at_short'];
+    protected $appends = ['send_at_short', 'send_at_full'];
 
     /**
      * Laravel eloquent relationships
@@ -32,9 +32,10 @@ class Email extends Model
         $send_at_formatted = '';
         if ($send_at->isCurrentYear()) {
             if ($send_at->isCurrentDay()) {
-                $send_at_formatted = $send_at->format('H:i');
+                $send_at_formatted = $send_at->isoFormat('HH:mm');
             }else {
-                $send_at_formatted = $send_at->format('d').' '.$send_at->shortMonthName;
+                // $send_at_formatted = $send_at->format('d').' '.$send_at->shortMonthName;
+                $send_at_formatted = $send_at->isoFormat('DD MMM');
             }
         }else {
             $send_at_formatted = $send_at->isoFormat('L');
@@ -44,7 +45,19 @@ class Email extends Model
     }
 
     public function getSendAtFullAttribute(){
+        $send_at = Carbon::parse($this->send)->locale('fr');
+        $send_at_formatted = '';
+        if ($send_at->isCurrentYear()) {
+            if ($send_at->isCurrentDay()) {
+                $send_at_formatted = $send_at->isoFormat('HH:mm').' ('.$send_at->diffForHumans().')';
+            }else {
+                $send_at_formatted = $send_at->isoFormat('dddd DD MMMM HH:mm').' ('.$send_at->diffForHumans().')';
+            }
+        }else {
+            $send_at_formatted = $send_at->isoFormat('LLLL');
+        }
 
+        return $send_at_formatted;
     }
 
 }

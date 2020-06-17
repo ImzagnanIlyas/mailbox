@@ -27,8 +27,8 @@
                                             <div aria-labelledby="dropdownMenuButton" class="dropdown-menu texte-sm bg-secondary">
                                                 <a v-for="category in emails.data[0].user.categories" :key="category.id" @click="setCategory(category.id)" role="button" tabindex="0" class="dropdown-item dropdown-item-tag text-white"><i class="fas fa-tag text-white"></i> {{ category.title }}</a>
                                             </div>
-                                            <button v-if="isAllRead" @click="setRead(false)" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-envelope fa-lg text-white"></i></button>
-                                            <button v-else @click="setRead(true)" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-envelope-open-text fa-lg text-white"></i></button>
+                                            <button v-if="isAllRead" @click="setRead(0, false)" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-envelope fa-lg text-white"></i></button>
+                                            <button v-else @click="setRead(0, true)" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-envelope-open-text fa-lg text-white"></i></button>
                                         </div>
 
                                         <button @click="setArchived" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-archive fa-lg text-white"></i></button>
@@ -56,7 +56,7 @@
             <div class="row clearfix border-top" style="margin-top: -15px;">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <ul class="mail_list list-group list-unstyled">
-                        <li v-for="userEmail in emails.data" :key="userEmail.id" @click="$emit('showEmail', userEmail)" :class="[(userEmail.state == 'read') ? 'read' : 'unread border-primary', (checkedMails.includes(userEmail.id)) ? 'bg-selected' : '']" class="list-group-item" style="cursor: pointer;">
+                        <li v-for="userEmail in emails.data" :key="userEmail.id" @click="showEmail(userEmail)" :class="[(userEmail.state == 'read') ? 'read' : 'unread border-primary', (checkedMails.includes(userEmail.id)) ? 'bg-selected' : '']" class="list-group-item" style="cursor: pointer;">
                             <div class="media flex-wrap">
                                 <div class="pull-left">
                                     <div class="controls">
@@ -134,6 +134,11 @@ export default {
             var tmp = document.createElement("DIV");
             tmp.innerHTML = html;
             return tmp.textContent || tmp.innerText || "";
+        },
+
+        showEmail(userEmail){
+            this.setRead(userEmail.id, true);
+            this.$emit('showEmail', userEmail);
         },
         /**
         ==============================
@@ -234,10 +239,11 @@ export default {
             })
             this.endEdit();
         },
-        setRead(state){
+        setRead(emailId ,state){
+            emailId = emailId ? emailId : this.checkedMails; // if emailId=0 is a multiple select then array 'checkedMails' passed, else one mail are selected
             axios.put('/email/setRead',{
                 state: state,
-                ids: this.checkedMails
+                ids: emailId
             })
             .then(res => {
                 this.emails = res.data;

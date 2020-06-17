@@ -43,9 +43,12 @@ class ShowEmailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($path)
     {
-        //
+        // $link = storage_path('uploads/xy.zip');
+        $path = base64_decode($path);
+        $link = storage_path('app/public/'.$path);
+        return response()->download($link);
     }
 
     /**
