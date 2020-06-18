@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-toolbar dark flat color="grey-lighten">
+        <v-toolbar  flat color="grey-lighten">
             <v-toolbar-title>Roles</v-toolbar-title>
             <v-divider
                     class="mx-2"
@@ -9,7 +9,10 @@
             ></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="700px">
-                <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
+                <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">New Item</v-btn>
+                </template>
+
                 <v-card>
                     <v-card-title>
                         <span class="headline">{{ formTitle }}</span>
@@ -40,13 +43,20 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-                        <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
+                        <v-btn color="blue" dark @click="close">Cancel</v-btn>
+                        <v-btn color="blue" dark @click="save">Save</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
         </v-toolbar>
-        <v-data-table
+        <v-data-table :headers="headers" :items="tableData" class="elevation-1">
+            <template v-slot:item.actions="{ item }">
+                <v-icon small class="mr-2" @click="editItem(item)">fas fa-pencil-alt</v-icon>
+                <v-icon small @click="deleteItem(item)">fas fa-trash</v-icon>
+            </template>
+        </v-data-table>
+
+        <!-- <v-data-table
                 :headers="headers"
                 :items="tableData"
                 class="elevation-1"
@@ -83,7 +93,7 @@
             <template slot="no-data">
                 <v-btn color="primary" @click="initialize">Reset</v-btn>
             </template>
-        </v-data-table>
+        </v-data-table> -->
     </div>
 </template>
 
@@ -93,8 +103,8 @@
       dialog: false,
       headers: [
         {text: 'Name', value: 'name'},
-        {text: 'Permissions', value: 'created_at'},
-        {text: 'Actions', value: 'name', sortable: false},
+        {text: 'Guard name', value: 'guard_name'},
+        { text: 'Actions', value: 'actions', sortable: false },
       ],
       tableData: [],
       editedIndex: -1,

@@ -17,9 +17,9 @@
 
                 <v-list-item color="teal" class="text-decoration-none" exact to="/admin">
                     <v-list-item-icon>
-                        <v-icon>fas fa-tachometer-alt</v-icon>
+                        <v-icon>fas fa-envelope </v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>Dashboard</v-list-item-title>
+                    <v-list-item-title>Emails</v-list-item-title>
                 </v-list-item>
 
                 <v-list-item color="teal" class="text-decoration-none" exact to="/admin/users">
