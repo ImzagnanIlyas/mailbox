@@ -17,12 +17,15 @@ class EmailController extends Controller
     public function index()
     {
         return response()->json(
-            UserEmail::with('user', 'email', 'category')
+            UserEmail::select('user_emails.*','emails.send')
+                ->join('emails','emails.id', '=', 'user_emails.email_id')
+                ->with('user', 'email', 'category')
                 ->whereUserId(Auth::user()->id)
                 ->whereIn('state', ['received', 'read'])
                 ->whereArchived(false)
                 ->whereTrashed(false)
-                ->paginate(3)
+                ->orderByDesc('send')
+                ->paginate(10)
         );
     }
 
@@ -111,12 +114,15 @@ class EmailController extends Controller
         }
 
         return response()->json(
-            UserEmail::with('user', 'email', 'category')
+            UserEmail::select('user_emails.*','emails.send')
+                ->join('emails', 'user_emails.email_id', 'emails.id')
+                ->with('user', 'email', 'category')
                 ->whereUserId(Auth::user()->id)
                 ->whereIn('state', ['received', 'read'])
                 ->whereArchived(false)
                 ->whereTrashed(false)
-                ->paginate(3)
+                ->orderBy('email.send', 'desc')
+                ->paginate(10)
         );
     }
 
