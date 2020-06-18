@@ -95,14 +95,7 @@
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-star m-auto text-gray"></i></span><span id="legend">Important</span></a></li>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-paper-plane m-auto text-gray"></i></span><span id="legend">Messages envoyés</span></a></li>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-file m-auto text-gray"></i></span><span id="legend">Brouillions</span></a></li>
-            <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Mes catégories</span></a>
-                <div id="pages" class="collapse" style="max-height: 30vh;overflow: auto;">
-                <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-                    <!-- <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>Sport</span></a></li> -->
-                    <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-plus m-auto text-gray"></i></span><span>Créer une catégorie</span></a></li>
-                </ul>
-                </div>
-            </li>
+            <categories userjson="{{ Auth::user() }}"></categories>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-envelope m-auto text-gray"></i></span><span id="legend">Tous les messages</span></a></li>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-archive m-auto text-gray"></i></span><span id="legend">Messages archivés</span></a></li>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-trash m-auto text-gray"></i></span><span id="legend">Corbeille</span></a></li>

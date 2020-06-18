@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\UserEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -128,5 +129,12 @@ class EmailController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function storeCategory(Request $request)
+    {
+        Category::Create($request->all());
+        return response()->json(Auth::user());
     }
 }

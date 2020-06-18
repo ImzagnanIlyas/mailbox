@@ -54,6 +54,8 @@ Vue.component('email-list', require('./components/email-list.vue').default);
 Vue.component('show-email', require('./components/show-email.vue').default);
 Vue.component('new-email', require('./components/new-email.vue').default);
 
+Vue.component('categories', require('./components/categories.vue').default);
+
 Vue.component('admin', require('./components/Admin/Admin.vue').default);
 
 const routes = [
