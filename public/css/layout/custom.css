@@ -26,3 +26,19 @@
 .dropdown-item-tag:hover i, .dropdown-item-tag:focus i {
     color: #6c757d !important;
 }
+
+#style-switch-button {
+    top: 694px;
+    left: 0px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: 998;
+}
+#style-switch-button span{
+    display: none;
+}
+#style-switch-button:hover span{
+    display: contents;
+}

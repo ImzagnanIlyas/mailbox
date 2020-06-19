@@ -22,18 +22,18 @@
                                     <button @click="getEmails" v-show="!edit" type="button" class="bg-transparent border-0 ml-2"><i class="fas fa-sync-alt fa-lg text-dark"></i></button>
                                     <div v-if="edit" class="d-flex bg-secondary rounded ml-2">
                                         <div class="d-flex border-right">
-                                            <button @click="toggleImportant(0,!true)" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-star fa-lg text-white"></i></button>
-                                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-tag fa-lg text-white"></i></button>
+                                            <button @click="toggleImportant(0,!true)" type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-star fa-lg text-white"></i></button>
+                                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-tag fa-lg text-white"></i></button>
                                             <div aria-labelledby="dropdownMenuButton" class="dropdown-menu texte-sm bg-secondary">
                                                 <a v-for="category in emails.data[0].user.categories" :key="category.id" @click="setCategory(category.id)" role="button" tabindex="0" class="dropdown-item dropdown-item-tag text-white"><i class="fas fa-tag text-white"></i> {{ category.title }}</a>
                                             </div>
-                                            <button v-if="isAllRead" @click="setRead(0, false)" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-envelope fa-lg text-white"></i></button>
-                                            <button v-else @click="setRead(0, true)" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-envelope-open-text fa-lg text-white"></i></button>
+                                            <button v-if="isAllRead" @click="setRead(0, false)" type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-envelope fa-lg text-white"></i></button>
+                                            <button v-else @click="setRead(0, true)" type="button" class="bg-transparent border-0 p-2 mx-3"><i class="fas fa-envelope-open-text fa-lg text-white"></i></button>
                                         </div>
 
                                         <button @click="setArchived" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-archive fa-lg text-white"></i></button>
-                                        <button @click="setTrashed" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-trash fa-lg text-white"></i></button>
-                                        <button type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-ellipsis-v fa-lg text-white"></i></button>
+                                        <button @click="setTrashed" type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-trash fa-lg text-white"></i></button>
+                                        <!-- <button type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-ellipsis-v fa-lg text-white"></i></button> -->
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-2 col-md-2 col-5 d-flex align-items-center">
