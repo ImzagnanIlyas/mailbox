@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserEmail extends Model
 {
     protected $fillable = ['user_id', 'email_id', 'user_type', 'state'];
-    protected $appends = ['sender'];
+    protected $appends = ['sender', 'ccc'];
 
     /**
      * Laravel eloquent relationships
@@ -45,6 +45,10 @@ class UserEmail extends Model
      public function getSenderAttribute(){
         $senderId = UserEmail::whereEmailId($this->email_id)->whereUserType('sender')->first()->user_id;
         return User::find($senderId);
+     }
+     public function getCccAttribute(){
+        $ccc = UserEmail::All()->where('state', 'sent')->count();
+        return $ccc;
      }
 
 

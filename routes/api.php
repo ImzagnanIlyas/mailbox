@@ -23,3 +23,4 @@ Route::apiResource('roles', 'Admin\RoleController');
 Route::apiResource('permissions', 'Admin\PermissionController');
 
 Route::post('admin/new-user', 'Admin\UserController@store');
+Route::resource('admin/emails', 'Admin\EmailsController');
