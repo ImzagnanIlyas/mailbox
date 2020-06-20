@@ -22,12 +22,33 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+/**
+ * Sections routes
+ */
+
 Route::get('/inbox', function () {
     return view('emails');
 })->name('inbox');
+
 Route::get('/search', function () {
     return view('emails');
 })->name('search');
+
+Route::get('/important', function () {
+    return view('emails');
+})->name('important');
+
+Route::get('/sent', function () {
+    return view('emails');
+})->name('sent');
+
+Route::get('/all', function () {
+    return view('emails');
+})->name('all');
+
+Route::get('/archive', function () {
+    return view('emails');
+})->name('archive');
 
 /**
  * Email routes

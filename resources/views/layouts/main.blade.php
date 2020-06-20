@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="{{ asset('css/layout/custom.css') }}">
 
     @yield('style')
+    @php
+        use Illuminate\Support\Facades\Request;
+        $section = Request::segment(1);
+    @endphp
 </head>
 <body>
     <div id="app">
@@ -91,13 +95,13 @@
             <new-email :key="newEmailComponentKey"></new-email>
             <button id="render" @click="newEmailComponentKey += 1" hidden></button>
             <ul class="sidebar-menu list-unstyled">
-            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted active"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-inbox m-auto text-gray"></i></span><span id="legend">Boîte de réception</span></a></li>
-            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-star m-auto text-gray"></i></span><span id="legend">Important</span></a></li>
-            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-paper-plane m-auto text-gray"></i></span><span id="legend">Messages envoyés</span></a></li>
+            <li class="sidebar-list-item"><a href="{{ route('inbox') }}" class="sidebar-link text-muted @if($section == 'inbox') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-inbox m-auto text-gray"></i></span><span id="legend">Boîte de réception</span></a></li>
+            <li class="sidebar-list-item"><a href="{{ route('important') }}" class="sidebar-link text-muted @if($section == 'important') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-star m-auto text-gray"></i></span><span id="legend">Important</span></a></li>
+            <li class="sidebar-list-item"><a href="{{ route('sent') }}" class="sidebar-link text-muted @if($section == 'sent') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-paper-plane m-auto text-gray"></i></span><span id="legend">Messages envoyés</span></a></li>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-file m-auto text-gray"></i></span><span id="legend">Brouillions</span></a></li>
             <categories userjson="{{ Auth::user() }}"></categories>
-            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-envelope m-auto text-gray"></i></span><span id="legend">Tous les messages</span></a></li>
-            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-archive m-auto text-gray"></i></span><span id="legend">Messages archivés</span></a></li>
+            <li class="sidebar-list-item"><a href="{{ route('all') }}" class="sidebar-link text-muted @if($section == 'all') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-envelope m-auto text-gray"></i></span><span id="legend">Tous les messages</span></a></li>
+            <li class="sidebar-list-item"><a href="{{ route('archive') }}" class="sidebar-link text-muted  @if($section == 'archive') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-archive m-auto text-gray"></i></span><span id="legend">Messages archivés</span></a></li>
             <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-trash m-auto text-gray"></i></span><span id="legend">Corbeille</span></a></li>
             </ul>
         </div>

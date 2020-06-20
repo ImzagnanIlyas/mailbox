@@ -48,6 +48,54 @@ class EmailController extends Controller
                     ->orderByDesc('send')
                     ->paginate(10)
             );
+        }elseif ($section == '/important') {
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->whereIn('state', ['received', 'read'])
+                    ->whereArchived(false)
+                    ->whereTrashed(false)
+                    ->whereimportant(true)
+                    ->orderByDesc('send')
+                    ->paginate(10)
+            );
+        }elseif ($section == '/sent') {
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->where('state', 'sent')
+                    ->whereArchived(false)
+                    ->whereTrashed(false)
+                    ->orderByDesc('send')
+                    ->paginate(10)
+            );
+        }elseif ($section == '/all') {
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->whereIn('state', ['sent', 'received', 'read'])
+                    ->whereTrashed(false)
+                    ->orderByDesc('send')
+                    ->paginate(10)
+            );
+        }elseif ($section == '/archive') {
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->whereIn('state', ['sent', 'received', 'read'])
+                    ->whereArchived(true)
+                    ->whereTrashed(false)
+                    ->orderByDesc('send')
+                    ->paginate(10)
+            );
         }
     }
 

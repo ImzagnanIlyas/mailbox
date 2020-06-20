@@ -56,7 +56,7 @@
             <div id="emails-list" class="row clearfix border-top" style="margin-top: -15px;">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <ul class="mail_list list-group list-unstyled">
-                        <li v-for="userEmail in emails.data" :key="userEmail.id" @click="showEmail(userEmail)" :class="[(userEmail.state == 'read') ? 'read' : 'unread border-primary', (checkedMails.includes(userEmail.id)) ? 'bg-selected' : '']" class="list-group-item" style="cursor: pointer;">
+                        <li v-for="userEmail in emails.data" :key="userEmail.id" @click="showEmail(userEmail)" :class="[(userEmail.state == 'read' || userEmail.state == 'sent') ? 'read' : 'unread border-primary', (checkedMails.includes(userEmail.id)) ? 'bg-selected' : '']" class="list-group-item" style="cursor: pointer;">
                             <div class="media flex-wrap">
                                 <div class="pull-left">
                                     <div class="controls">
@@ -142,7 +142,7 @@ export default {
         },
 
         showEmail(userEmail){
-            this.setRead(userEmail.id, true);
+            if(userEmail.state == 'received') this.setRead(userEmail.id, true);
             this.$emit('showEmail', userEmail);
         },
         /**
