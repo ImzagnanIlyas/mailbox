@@ -19,7 +19,7 @@
                                             <a @click="selectNotImportant" role="button" tabindex="0" class="dropdown-item">Non importants</a>
                                         </div>
                                     </div>
-                                    <button @click="getEmails" v-show="!edit" type="button" class="bg-transparent border-0 ml-2"><i class="fas fa-sync-alt fa-lg text-dark"></i></button>
+                                    <button @click="getResults(emails.current_page)" v-show="!edit" type="button" class="bg-transparent border-0 ml-2"><i class="fas fa-sync-alt fa-lg text-dark"></i></button>
                                     <div v-if="edit" class="d-flex bg-secondary rounded ml-2">
                                         <div class="d-flex border-right">
                                             <button @click="toggleImportant(0,!true)" type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-star fa-lg text-white"></i></button>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row clearfix border-top" style="margin-top: -15px;">
+            <div id="emails-list" class="row clearfix border-top" style="margin-top: -15px;">
                 <div class="col-md-12 col-lg-12 col-xl-12">
                     <ul class="mail_list list-group list-unstyled">
                         <li v-for="userEmail in emails.data" :key="userEmail.id" @click="showEmail(userEmail)" :class="[(userEmail.state == 'read') ? 'read' : 'unread border-primary', (checkedMails.includes(userEmail.id)) ? 'bg-selected' : '']" class="list-group-item" style="cursor: pointer;">
@@ -63,7 +63,7 @@
                                         <div class="custom-control custom-checkbox d-flex justifu-content-center">
                                             <input :id="'CB'+userEmail.id" :value="userEmail.id" v-model="checkedMails" type="checkbox" class="custom-control-input">
                                             <label :for="'CB'+userEmail.id" class="custom-control-label"></label>
-                                            <button type="button" class="bg-transparent border-0" style="margin-top: -5px;"><i @click="toggleImportant(userEmail.id, userEmail.important)" :class="userEmail.important ? 'fas' : 'far'" class="fa-star" style="color: gold;"></i></button>
+                                            <button type="button" class="bg-transparent border-0" style="margin-top: -5px;"><i @click="toggleImportant(userEmail.id, userEmail.important)" :class="userEmail.important ? 'fas' : 'far'" class="fa-star" :style="(userEmail.important) ? 'color: gold;' : 'color: gray;'"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -90,6 +90,7 @@
 export default {
     data: function () {
         return {
+            section: this.$route.path,
             emails: {},
 
             isAllChecked : false,
@@ -101,8 +102,11 @@ export default {
     },
 
     mounted() {
-        console.log('email-list component mounted.')
+        console.log('email-list component mounted.');
+        console.log(this.$route);
         this.getResults();
+
+        // if(this.$route.query.q) document.getElementById("emails-list").innerHTML = document.getElementById("emails-list").innerHTML.replace('technologie',"<span class='font-weight-bold text-primary'>"+this.$route.query.q+"</span>");
     },
 
     methods:{
@@ -120,7 +124,8 @@ export default {
 
         // pagination function
         getResults(page = 1) {
-			axios.get('email?page=' + page)
+            var url = (this.$route.query.q) ? '/email?section='+this.section+'&q='+this.$route.query.q+'&page='+page : '/email?section='+this.section+'&page='+page ;
+			axios.get(url)
             .then(res => {
                 this.emails = res.data;
                 this.endEdit();
@@ -219,7 +224,8 @@ export default {
                 ids: emailId
             })
             .then(res => {
-                this.emails = res.data;
+                // this.emails = res.data;
+                this.getResults(this.emails.current_page);
             })
             .catch(err => {
                 console.error(err);
@@ -232,7 +238,8 @@ export default {
                 ids: this.checkedMails
             })
             .then(res => {
-                this.emails = res.data;
+                // this.emails = res.data;
+                this.getResults(this.emails.current_page);
             })
             .catch(err => {
                 console.error(err);
@@ -246,7 +253,8 @@ export default {
                 ids: emailId
             })
             .then(res => {
-                this.emails = res.data;
+                // this.emails = res.data;
+                this.getResults(this.emails.current_page);
             })
             .catch(err => {
                 console.error(err);
@@ -258,7 +266,8 @@ export default {
                 ids: this.checkedMails
             })
             .then(res => {
-                this.emails = res.data;
+                // this.emails = res.data;
+                this.getResults(this.emails.current_page);
             })
             .catch(err => {
                 console.error(err);
@@ -270,7 +279,8 @@ export default {
                 ids: this.checkedMails
             })
             .then(res => {
-                this.emails = res.data;
+                // this.emails = res.data;
+                this.getResults(this.emails.current_page);
             })
             .catch(err => {
                 console.error(err);

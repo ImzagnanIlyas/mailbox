@@ -16,17 +16,39 @@ class EmailController extends Controller
      */
     public function index()
     {
-        return response()->json(
-            UserEmail::select('user_emails.*','emails.send')
-                ->join('emails','emails.id', '=', 'user_emails.email_id')
-                ->with('user', 'email', 'category')
-                ->whereUserId(Auth::user()->id)
-                ->whereIn('state', ['received', 'read'])
-                ->whereArchived(false)
-                ->whereTrashed(false)
-                ->orderByDesc('send')
-                ->paginate(10)
-        );
+        $section = request()->section;
+        if ($section == '/inbox') {
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->whereIn('state', ['received', 'read'])
+                    ->whereArchived(false)
+                    ->whereTrashed(false)
+                    ->orderByDesc('send')
+                    ->paginate(10)
+            );
+        }elseif ($section == '/search') {
+            $q = request()->q;
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->join('users','users.id', '=', 'emails.user_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->whereIn('state', ['received', 'read'])
+                    ->whereArchived(false)
+                    ->whereTrashed(false)
+                    ->where(function($query) {
+                        $query->where('users.name', 'like', '%'.request()->q.'%')
+                            ->orWhere('emails.object', 'like', '%'.request()->q.'%')
+                            ->orWhere('emails.content', 'like', '%'.request()->q.'%');
+                    })
+                    ->orderByDesc('send')
+                    ->paginate(10)
+            );
+        }
     }
 
     /**
@@ -113,17 +135,7 @@ class EmailController extends Controller
             }
         }
 
-        return response()->json(
-            UserEmail::select('user_emails.*','emails.send')
-                ->join('emails', 'user_emails.email_id', 'emails.id')
-                ->with('user', 'email', 'category')
-                ->whereUserId(Auth::user()->id)
-                ->whereIn('state', ['received', 'read'])
-                ->whereArchived(false)
-                ->whereTrashed(false)
-                ->orderBy('email.send', 'desc')
-                ->paginate(10)
-        );
+        return response()->json('email updated');
     }
 
     /**

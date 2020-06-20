@@ -33,10 +33,10 @@
         <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow" style="position: fixed;top: 0;left: 0;width: 100%;z-index: 999;">
             <button class="bg-transparent border-0 sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i class="fas fa-bars"></i></button>
             <a href="#" class="font-weight-bold text-uppercase text-base">boîte mail</a>
-            <form id="searchForm" class="col-6 ml-5 d-none d-lg-block">
+            <form method="GET" action="{{ route('search') }}" id="searchForm" class="col-6 ml-5 d-none d-lg-block">
                 <div class="form-group d-flex justofy-content-between position-relative mb-0">
                     <button type="submit" class="bg-transparent border-0 pl-0 py-2"><i class="fas fa-search text-gray"></i></button>
-                    <input type="search" placeholder="Rechercher dans les messages" class="form-control form-control-sm border-0 no-shadow bg-transparent pl-3 my-auto">
+                    <input type="search" name="q" placeholder="Rechercher dans les messages" class="form-control form-control-sm border-0 no-shadow bg-transparent pl-3 my-auto">
                     <button type="button" class="bg-transparent border-0 px-2 py-2"><i class="fas fa-sort-down text-gray"></i></button>
                 </div>
             </form>

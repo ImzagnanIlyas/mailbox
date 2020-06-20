@@ -23,8 +23,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/inbox', function () {
-    return view('inbox');
-});
+    return view('emails');
+})->name('inbox');
+Route::get('/search', function () {
+    return view('emails');
+})->name('search');
 
 /**
  * Email routes
