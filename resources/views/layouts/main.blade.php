@@ -102,7 +102,7 @@
             <categories userjson="{{ Auth::user() }}"></categories>
             <li class="sidebar-list-item"><a href="{{ route('all') }}" class="sidebar-link text-muted @if($section == 'all') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-envelope m-auto text-gray"></i></span><span id="legend">Tous les messages</span></a></li>
             <li class="sidebar-list-item"><a href="{{ route('archive') }}" class="sidebar-link text-muted  @if($section == 'archive') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-archive m-auto text-gray"></i></span><span id="legend">Messages archivés</span></a></li>
-            <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-trash m-auto text-gray"></i></span><span id="legend">Corbeille</span></a></li>
+            <li class="sidebar-list-item"><a href="{{ route('trash') }}" class="sidebar-link text-muted @if($section == 'trash') active @endif"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-trash m-auto text-gray"></i></span><span id="legend">Corbeille</span></a></li>
             </ul>
         </div>
         </div>

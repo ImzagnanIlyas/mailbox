@@ -14,7 +14,7 @@
     padding-top: 72px;
 }
 .contentToggled{
-    padding-left: 96px;
+    padding-left: 106px;
     padding-top: 72px;
 }
 
@@ -41,4 +41,9 @@
 }
 #style-switch-button:hover span{
     display: contents;
+}
+
+.option-button:hover {
+    background-color: rgb(240, 240, 240) !important;
+    border-radius: 50px;
 }

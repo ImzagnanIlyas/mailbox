@@ -10,7 +10,7 @@
                                     <div class="custom-control custom-checkbox checkbox-lg d-flex justifu-content-center mb-1">
                                         <input v-model="isAllChecked" id="isAllChecked" type="checkbox" class="custom-control-input">
                                         <label for="isAllChecked" class="custom-control-label"></label>
-                                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bg-transparent border-0" style="margin-left: -5px;"><i class="fas fa-sort-down fa-lg text-dark"></i></button>
+                                        <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bg-transparent border-0" style="margin-left: -5px;"><i class="fas fa-sort-down fa-lg text-secondary"></i></button>
                                         <div aria-labelledby="dropdownMenuButton" class="dropdown-menu texte-sm">
                                             <a @click="selectAll" role="button" tabindex="0" class="dropdown-item">Tous</a>
                                             <a @click="selectRead" role="button" tabindex="0" class="dropdown-item">Lus</a>
@@ -19,21 +19,39 @@
                                             <a @click="selectNotImportant" role="button" tabindex="0" class="dropdown-item">Non importants</a>
                                         </div>
                                     </div>
-                                    <button @click="getResults(emails.current_page)" v-show="!edit" type="button" class="bg-transparent border-0 ml-2"><i class="fas fa-sync-alt fa-lg text-dark"></i></button>
-                                    <div v-if="edit" class="d-flex bg-secondary rounded ml-2">
-                                        <div class="d-flex border-right">
-                                            <button @click="toggleImportant(0,!true)" type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-star fa-lg text-white"></i></button>
-                                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-tag fa-lg text-white"></i></button>
-                                            <div aria-labelledby="dropdownMenuButton" class="dropdown-menu texte-sm bg-secondary">
-                                                <a v-for="category in emails.data[0].user.categories" :key="category.id" @click="setCategory(category.id)" role="button" tabindex="0" class="dropdown-item dropdown-item-tag text-white"><i class="fas fa-tag text-white"></i> {{ category.title }}</a>
-                                            </div>
-                                            <button v-if="isAllRead" @click="setRead(0, false)" type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-envelope fa-lg text-white"></i></button>
-                                            <button v-else @click="setRead(0, true)" type="button" class="bg-transparent border-0 p-2 mx-3"><i class="fas fa-envelope-open-text fa-lg text-white"></i></button>
-                                        </div>
+                                    <button @click="getResults(emails.current_page)" v-show="!edit" type="button" class="bg-transparent border-0 p-2 ml-2 option-button"><i class="fas fa-sync-alt fa-lg text-secondary"></i></button>
+                                    <div v-if="edit" class="d-flex rounded ml-1">
+                                        <!-- <div class="d-flex"> -->
+                                            <!-- <button v-if="section == '/draft' || section == '/trash'" type="button" class="col-7 bg-transparent border-0 text-secondary p-2 option-button">Supprimer définitivement</button> -->
+                                            <button v-if="section == '/important'" @click="toggleImportant(0,!false)" type="button" class="bg-transparent border-0 ml-3 option-button">
+                                                <b-iconstack font-scale="2.5">
+                                                    <b-icon stacked icon="star" variant="secondary" scale="0.6"></b-icon>
+                                                    <b-icon stacked icon="slash" variant="secondary"></b-icon>
+                                                </b-iconstack>
+                                            </button>
+                                            <button v-else @click="toggleImportant(0,!true)" type="button" class="bg-transparent border-0 p-2 ml-3 option-button"><i class="fas fa-star fa-lg text-secondary"></i></button>
 
-                                        <button @click="setArchived" type="button" class="bg-transparent border-0 p-2 ml-2"><i class="fas fa-archive fa-lg text-white"></i></button>
-                                        <button @click="setTrashed" type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-trash fa-lg text-white"></i></button>
-                                        <!-- <button type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-ellipsis-v fa-lg text-white"></i></button> -->
+                                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="bg-transparent border-0 p-2 ml-3 option-button"><i class="fas fa-tag fa-lg text-secondary"></i></button>
+                                            <div aria-labelledby="dropdownMenuButton" class="dropdown-menu texte-sm bg-secondary">
+                                                <a v-for="category in emails.data[0].user.categories" :key="category.id" @click="setCategory(category.id)" role="button" tabindex="0" class="dropdown-item dropdown-item-tag text-white"><i class="fas fa-tag text-secondary"></i> {{ category.title }}</a>
+                                            </div>
+
+                                            <button v-if="isAllRead" @click="setRead(0, false)" type="button" class="bg-transparent border-0 p-2 ml-3 option-button"><i class="fas fa-envelope fa-lg text-secondary"></i></button>
+                                            <button v-else @click="setRead(0, true)" type="button" class="bg-transparent border-0 p-2 ml-3 option-button"><i class="fas fa-envelope-open-text fa-lg text-secondary"></i></button>
+                                        <!-- </div> -->
+                                        <button v-if="section == '/archive'" @click="setArchived(false)" type="button" class="bg-transparent border-0 ml-3 option-button">
+                                            <b-iconstack font-scale="2.5">
+                                                <b-icon stacked icon="archive-fill" variant="secondary" scale="0.6"></b-icon>
+                                                <b-icon stacked icon="slash" variant="light"></b-icon>
+                                            </b-iconstack>
+                                        </button>
+                                        <button v-else @click="setArchived(true)" type="button" class="bg-transparent border-0 p-2 ml-3 option-button"><i class="fas fa-archive fa-lg text-secondary"></i></button>
+
+                                        <button v-if="section == '/trash'" @click="setTrashed(false)" type="button" class="bg-transparent border-0 p-2 ml-3 option-button">
+                                            <i class="fas fa-trash-restore fa-lg text-secondary"></i>
+                                        </button>
+                                        <button v-else @click="setTrashed(true)" type="button" class="bg-transparent border-0 p-2 ml-3 option-button"><i class="fas fa-trash fa-lg text-secondary"></i></button>
+                                        <!-- <button type="button" class="bg-transparent border-0 p-2 ml-3 option-button"><i class="fas fa-ellipsis-v fa-lg text-secondary"></i></button> -->
                                     </div>
                                 </div>
                                 <div id="pagination-div" class="col-lg-3 col-md-2 col-5 d-flex justify-content-end align-items-center mr-3">
@@ -51,7 +69,7 @@
                             <div class="media flex-wrap">
                                 <div class="pull-left">
                                     <div class="controls">
-                                        <div class="custom-control custom-checkbox d-flex justifu-content-center">
+                                        <div @click.stop class="custom-control custom-checkbox d-flex justifu-content-center">
                                             <input :id="'CB'+userEmail.id" :value="userEmail.id" v-model="checkedMails" type="checkbox" class="custom-control-input">
                                             <label :for="'CB'+userEmail.id" class="custom-control-label"></label>
                                             <button type="button" class="bg-transparent border-0" style="margin-top: -5px;"><i @click="toggleImportant(userEmail.id, userEmail.important)" :class="userEmail.important ? 'fas' : 'far'" class="fa-star" :style="(userEmail.important) ? 'color: gold;' : 'color: gray;'"></i></button>
@@ -68,6 +86,7 @@
                                         <a role="button" tabindex="0" class="m-r-10">{{ (userEmail.email.object) ? userEmail.email.object : '(aucun objet)' }}</a><span v-if="userEmail.category_id" class="badge bg-secondary text-white ml-1">{{ userEmail.category.title }}</span>
                                         <small class="float-right text-muted"><time class="hidden-sm-down">{{ userEmail.email.send_at_short }}</time></small>
                                     </div>
+                                    <small v-if="userEmail.state == 'draft'" class="float-right text-muted"><time class="hidden-sm-down">(modifié {{userEmail.email.last_update_at}})</time></small>
                                     <p v-if="userEmail.email.content" class="msg">{{ stripHtml(userEmail.email.content).substring(0, 100) }}<span v-show="userEmail.email.content.length > 99">...</span><i v-show="userEmail.email.files" class="fas fa-paperclip ml-3"></i></p>
                                 </div>
                             </div>
@@ -151,7 +170,7 @@ export default {
         },
 
         showEmail(userEmail){
-            if (this.section == '/draft') {
+            if (userEmail.state == 'draft') {
                 this.emailClicked = userEmail;
                 this.editDraft = true;
             }else{
@@ -280,8 +299,9 @@ export default {
             })
             this.endEdit();
         },
-        setArchived(){
+        setArchived(state){
             axios.put('/email/setArchived',{
+                state: state,
                 ids: this.checkedMails
             })
             .then(res => {
@@ -293,8 +313,9 @@ export default {
             })
             this.endEdit();
         },
-        setTrashed(){
+        setTrashed(state){
             axios.put('/email/setTrashed',{
+                state: state,
                 ids: this.checkedMails
             })
             .then(res => {

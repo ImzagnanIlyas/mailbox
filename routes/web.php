@@ -68,6 +68,11 @@ Route::get('/category/{title}', function () {
     }
 })->name('category');
 
+Route::get('/trash', function () {
+    return view('emails');
+})->name('trash');
+
+
 /**
  * Email routes
  */

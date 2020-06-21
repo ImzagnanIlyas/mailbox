@@ -54,7 +54,6 @@ class EmailController extends Controller
                     ->join('emails','emails.id', '=', 'user_emails.email_id')
                     ->with('user', 'email', 'category')
                     ->where('user_emails.user_id', Auth::user()->id)
-                    ->whereIn('state', ['received', 'read'])
                     ->whereArchived(false)
                     ->whereTrashed(false)
                     ->whereimportant(true)
@@ -111,13 +110,23 @@ class EmailController extends Controller
             );
         }elseif ($section == '/draft') {
             return response()->json(
-                UserEmail::select('user_emails.*','emails.updated_at')
+                UserEmail::select('user_emails.*')
                     ->join('emails','emails.id', '=', 'user_emails.email_id')
                     ->with('user', 'email', 'category')
                     ->where('user_emails.user_id', Auth::user()->id)
                     ->where('state', 'draft')
                     ->whereTrashed(false)
                     ->orderByDesc('user_emails.created_at')
+                    ->paginate(10)
+            );
+        }elseif ($section == '/trash') {
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->whereTrashed(true)
+                    ->orderByDesc('send')
                     ->paginate(10)
             );
         }
@@ -198,13 +207,13 @@ class EmailController extends Controller
         }elseif ($function == 'setArchived') {
             $emails = UserEmail::findMany($request->ids);
             foreach ($emails as  $email) {
-                $email->archived = true;
+                $email->archived = $request->state;
                 $email->save();
             }
         }elseif ($function == 'setTrashed') {
             $emails = UserEmail::findMany($request->ids);
             foreach ($emails as  $email) {
-                $email->trashed = true;
+                $email->trashed = $request->state;
                 $email->save();
             }
         }

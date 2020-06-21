@@ -41,7 +41,10 @@ class NewEmailController extends Controller
      */
     public function store(Request $request)
     {
-        $email = Email::Create();
+        $email = Email::Create([
+            'user_id' => Auth::user()->id,
+            'send' => now(),
+        ]);
         $user_email = UserEmail::Create([
             'user_id' => Auth::user()->id,
             'email_id' => $email->id,

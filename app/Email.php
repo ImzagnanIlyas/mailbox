@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Email extends Model
 {
-    protected $appends = ['send_at_short', 'send_at_full', 'receivers_names'];
+    protected $fillable = ['user_id', 'send'];
+    protected $appends = ['send_at_short', 'send_at_full', 'last_update_at', 'receivers_names'];
 
     /**
      * Laravel eloquent relationships
@@ -58,6 +59,11 @@ class Email extends Model
         }
 
         return $send_at_formatted;
+    }
+
+    public function getLastUpdateAtAttribute(){
+        $updated_at = Carbon::parse($this->updated_at)->locale('fr');
+        return $updated_at->diffForHumans();
     }
 
     public function getReceiversNamesAttribute(){
