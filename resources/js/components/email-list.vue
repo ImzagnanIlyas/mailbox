@@ -59,11 +59,13 @@
                                     </div>
                                 </div>
                                 <div class="m-auto d-flex align-items-center" style="width: 13vw;">
-                                    <span>{{ userEmail.sender.name }}</span>
+                                    <span v-if="userEmail.state == 'draft'" class="text-danger">Brouillon</span>
+                                    <span v-else-if="userEmail.state == 'sent'">À : {{ userEmail.email.receivers_names }}</span>
+                                    <span v-else>{{ userEmail.sender.name }}</span>
                                 </div>
                                 <div class="media-body">
                                     <div class="media-heading">
-                                        <a role="button" tabindex="0" class="m-r-10">{{ userEmail.email.object }}</a><span v-if="userEmail.category_id" class="badge bg-secondary text-white ml-1">{{ userEmail.category.title }}</span>
+                                        <a role="button" tabindex="0" class="m-r-10">{{ (userEmail.email.object) ? userEmail.email.object : '(aucun objet)' }}</a><span v-if="userEmail.category_id" class="badge bg-secondary text-white ml-1">{{ userEmail.category.title }}</span>
                                         <small class="float-right text-muted"><time class="hidden-sm-down">{{ userEmail.email.send_at_short }}</time></small>
                                     </div>
                                     <p v-if="userEmail.email.content" class="msg">{{ stripHtml(userEmail.email.content).substring(0, 100) }}<span v-show="userEmail.email.content.length > 99">...</span><i v-show="userEmail.email.files" class="fas fa-paperclip ml-3"></i></p>

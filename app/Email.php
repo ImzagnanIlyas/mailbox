@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Email extends Model
 {
-    protected $appends = ['send_at_short', 'send_at_full'];
+    protected $appends = ['send_at_short', 'send_at_full', 'receivers_names'];
 
     /**
      * Laravel eloquent relationships
@@ -58,6 +58,27 @@ class Email extends Model
         }
 
         return $send_at_formatted;
+    }
+
+    public function getReceiversNamesAttribute(){
+        $string = '';
+        if ($this->receivers) {
+            $ids = json_decode($this->receivers);
+            foreach ($ids as $value) {
+                $user = User::find($value);
+                $string .= substr($user->name, 0, strpos($user->name, " ")).', ';
+            }
+            if(!$this->cc) $string = substr($string, 0, strrpos($string, ", "));
+        }
+        if ($this->cc) {
+            $ids = json_decode($this->cc);
+            foreach ($ids as $value) {
+                $user = User::find($value);
+                $string .= substr($user->name, 0, strpos($user->name, " ")).', ';
+            }
+            $string = substr($string, 0, strrpos($string, ", "));
+        }
+        return $string;
     }
 
 }
