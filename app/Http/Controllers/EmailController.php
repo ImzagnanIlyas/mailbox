@@ -96,7 +96,33 @@ class EmailController extends Controller
                     ->orderByDesc('send')
                     ->paginate(10)
             );
+        }elseif (strpos($section,'/category') !== false) {
+            $c = request()->c;
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.send')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->whereIn('state', ['received', 'read'])
+                    ->whereTrashed(false)
+                    ->whereCategoryId($c)
+                    ->orderByDesc('send')
+                    ->paginate(10)
+            );
+        }elseif ($section == '/draft') {
+            return response()->json(
+                UserEmail::select('user_emails.*','emails.updated_at')
+                    ->join('emails','emails.id', '=', 'user_emails.email_id')
+                    ->with('user', 'email', 'category')
+                    ->where('user_emails.user_id', Auth::user()->id)
+                    ->where('state', 'draft')
+                    ->whereTrashed(false)
+                    ->orderByDesc('user_emails.created_at')
+                    ->paginate(10)
+            );
         }
+
+        return response('err', 406);
     }
 
     /**

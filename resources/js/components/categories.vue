@@ -1,9 +1,9 @@
 <template>
 <div>
-    <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Mes catégories</span></a>
+    <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false" aria-controls="pages" :class="($route.query.c) ? 'active' : ''" class="sidebar-link text-muted"><span class="col-2 d-flex p-0 mr-3"><i class="fas fa-th-large m-auto text-gray"></i></span><span id="legend">Mes catégories</span></a>
         <div id="pages" class="collapse" style="max-height: 30vh;overflow: auto;">
         <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
-            <li v-for="category in user.categories" :key="category.id" class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>{{ category.title }}</span></a></li>
+            <li v-for="category in user.categories" :key="category.id" class="sidebar-list-item" :style="($route.query.c == category.id) ? 'background-color: #dedede' : '' "><a :href="'/category/'+category.title+'?c='+category.id" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-square m-auto text-gray"></i></span><span>{{ category.title }}</span></a></li>
             <li class="sidebar-list-item"><a @click="$bvModal.show('new-category-modal')" href="#" class="sidebar-link text-muted pl-lg-5"><span class="col-2 d-flex p-0 mr-3"><i id="legend" class="fas fa-plus m-auto text-gray"></i></span><span>Créer une catégorie</span></a></li>
         </ul>
         </div>

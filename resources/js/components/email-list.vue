@@ -36,15 +36,6 @@
                                         <!-- <button type="button" class="bg-transparent border-0 p-2 ml-3"><i class="fas fa-ellipsis-v fa-lg text-white"></i></button> -->
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-2 col-md-2 col-5 d-flex align-items-center">
-                                    <ul class="pagination justify-content-center mt-2">
-                                        <li class="page-item disabled"><span class="page-link"><i class="fas fa-chevron-left"></i></span></li>
-                                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                        <li class="page-item active"><span class="page-link">2<span class="sr-only">(current)</span></span></li>
-                                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                        <li class="page-item"><a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a></li>
-                                    </ul>
-                                </div> -->
                                 <div id="pagination-div" class="col-lg-3 col-md-2 col-5 d-flex justify-content-end align-items-center mr-3">
                                     <pagination :data="emails" @pagination-change-page="getResults" show-disabled :limit="1"></pagination>
                                 </div>
@@ -83,11 +74,16 @@
                 </div>
             </div>
         </div>
+        <edit-draft v-if="editDraft" :draft="emailClicked" @modalHidden="afterDraftEdit"></edit-draft>
     </section>
 </template>
 
 <script>
+import Draft from './edit-draft.vue'
 export default {
+    components: {
+        'edit-draft': Draft
+    },
     data: function () {
         return {
             section: this.$route.path,
@@ -98,6 +94,10 @@ export default {
 
             edit: false,
             isAllRead : true,
+
+            editDraft: false,
+            emailClicked : {},
+            editDraftKey: 0,
         }
     },
 
@@ -125,7 +125,14 @@ export default {
         // pagination function
         getResults(page = 1) {
             var url = (this.$route.query.q) ? '/email?section='+this.section+'&q='+this.$route.query.q+'&page='+page : '/email?section='+this.section+'&page='+page ;
-			axios.get(url)
+            if (this.$route.query.q) {
+                url = '/email?section='+this.section+'&q='+this.$route.query.q+'&page='+page;
+            }else if(this.$route.query.c){
+                url = '/email?section='+this.section+'&c='+this.$route.query.c+'&page='+page;
+            }else{
+                url = '/email?section='+this.section+'&page='+page;
+            }
+            axios.get(url)
             .then(res => {
                 this.emails = res.data;
                 this.endEdit();
@@ -142,8 +149,18 @@ export default {
         },
 
         showEmail(userEmail){
-            if(userEmail.state == 'received') this.setRead(userEmail.id, true);
-            this.$emit('showEmail', userEmail);
+            if (this.section == '/draft') {
+                this.emailClicked = userEmail;
+                this.editDraft = true;
+            }else{
+                if(userEmail.state == 'received') this.setRead(userEmail.id, true);
+                this.$emit('showEmail', userEmail);
+            }
+        },
+
+        afterDraftEdit(){
+            this.editDraft = false;
+            this.getResults(this.emails.current_page);
         },
         /**
         ==============================

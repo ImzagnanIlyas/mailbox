@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,23 @@ Route::get('/all', function () {
 Route::get('/archive', function () {
     return view('emails');
 })->name('archive');
+
+Route::get('/draft', function () {
+    return view('emails');
+})->name('draft');
+
+Route::get('/category/{title}', function () {
+    $tmp = Auth::user()->categories->firstWhere('id', request()->c);
+    if($tmp){
+        if ($tmp->title == Request::segment(2)) {
+            return view('emails');
+        }else{
+            abort(403);
+        }
+    }else{
+        abort(404);
+    }
+})->name('category');
 
 /**
  * Email routes
