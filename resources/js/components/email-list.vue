@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <edit-draft v-if="editDraft" :draft="emailClicked" @modalHidden="afterDraftEdit"></edit-draft>
+        <edit-draft v-if="editDraft" :draft="emailClicked" fontion="draft" @modalHidden="afterDraftEdit"></edit-draft>
     </section>
 </template>
 

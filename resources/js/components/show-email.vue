@@ -3,11 +3,14 @@
         <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
         <v-card class="mx-auto">
             <v-card-title>
+                <v-btn icon @click="$emit('closeEmail')">
+                    <v-icon>fas fa-arrow-left</v-icon>
+                </v-btn>
                 <v-col cols="7" class="font-weight-black">
-                    <button type="button" class="bg-transparent border-0" style="margin-top: -5px;"><i @click="toggleImportant(userEmail.id, userEmail.important)" :class="userEmail.important ? 'fas' : 'far'" class="fa-star" :style="(userEmail.important) ? 'color: gold;' : 'color: gray;'"></i></button>
-                    {{email.email.object}}
+                    <button type="button" class="bg-transparent border-0 px-1 option-button"><i @click="toggleImportant(userEmail.id, userEmail.important)" :class="userEmail.important ? 'fas' : 'far'" class="fa-star" :style="(userEmail.important) ? 'color: gold;' : 'color: gray;'"></i></button>
+                    {{(email.email.object) ? email.email.object : '(aucun objet)'}}
                 </v-col>
-                <v-btn class="ma-2 ml-auto" outlined color="success">
+                <v-btn @click="forwardEmail = true" class="ma-2 ml-auto" outlined color="success">
                     <v-icon small left>fas fa-share</v-icon> Transférer
                 </v-btn>
             </v-card-title>
@@ -65,18 +68,23 @@
                 </v-btn>
             </v-card-actions> -->
         </v-card>
+        <edit-draft v-if="forwardEmail" :draft="userEmail" fontion="forward" @modalHidden="forwardEmail = false"></edit-draft>
     </div>
 </template>
 
 <script>
 import {Vue2Editor, Quill} from "vue2-editor";
+import Draft from './edit-draft.vue'
 export default {
+    components: {
+        'edit-draft': Draft
+    },
     props: {
         email: Object,
     },
     data() {
         return {
-            userEmail: {},
+            userEmail: this.email,
 
             content: '',
             files: JSON.parse(this.email.email.files),
@@ -84,13 +92,13 @@ export default {
                 modules: {
                     "toolbar": false
                 }
-            }
+            },
+            forwardEmail: false,
         }
     },
     mounted() {
         console.log('show-email component mounted.');
         this.content = this.email.email.content;
-        this.userEmail = this.email;
     },
     methods: {
         download(path){

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <email-list v-if="isList" @showEmail="toggle($event)"></email-list>
-        <show-email v-else :email="email"></show-email>
+        <email-list v-show="isList" @showEmail="toggle($event)"></email-list>
+        <show-email v-if="!isList" :email="email" @closeEmail="isList = true"></show-email>
     </div>
 </template>
 

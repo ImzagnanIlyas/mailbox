@@ -4,7 +4,8 @@
         id="new-email-modal"
         :visible="true"
         size="xl"
-        centered title="Modifier brouillon"
+        centered
+        :title="title"
         header-bg-variant="primary"
         header-text-variant="light"
         header-class="py-1"
@@ -196,9 +197,11 @@ export default {
     },
     props: {
         draft: Object,
+        fontion : String,
     },
     data() {
         return {
+            title: (this.fonction == 'draft') ? 'Modifier brouillon' : 'Transférer message',
             options: [],
             ids: [],
 
@@ -262,28 +265,50 @@ export default {
         },
 
         afterShow(){
-            this.email = this.draft.email;
-            this.user_email = this.draft;
-            if (this.email.receivers) {
-                var r = JSON.parse(this.email.receivers);
-                var index;
-                for (const id of r) {
-                    index = this.ids.indexOf(parseInt(id));
-                    this.receiversTags.push(this.options[index]);
-                    this.receivers.push(this.ids[index]);
+            if (this.fontion == 'draft') {
+                this.email = this.draft.email;
+                this.user_email = this.draft;
+                 if (this.draft.email.receivers) {
+                    var r = JSON.parse(this.draft.email.receivers);
+                    var index;
+                    for (const id of r) {
+                        index = this.ids.indexOf(parseInt(id));
+                        this.receiversTags.push(this.options[index]);
+                        this.receivers.push(this.ids[index]);
+                    }
                 }
-            }
-            if (this.email.cc) {
-                var c = JSON.parse(this.email.cc);
-                var index;
-                for (const id of c) {
-                    index = this.ids.indexOf(parseInt(id));
-                    this.ccTags.push(this.options[index]);
-                    this.cc.push(this.ids[index]);
+                if (this.draft.email.cc) {
+                    var c = JSON.parse(this.draft.email.cc);
+                    var index;
+                    for (const id of c) {
+                        index = this.ids.indexOf(parseInt(id));
+                        this.ccTags.push(this.options[index]);
+                        this.cc.push(this.ids[index]);
+                    }
                 }
+                if(this.draft.email.object) this.object = this.draft.email.object;
+                if(this.draft.email.content) this.content = this.draft.email.content;
+            }else{
+                axios.post('/new-email')
+                .then(res => {
+                    this.email = res.data[0];
+                    this.user_email = res.data[1];
+                    if(this.draft.email.object) this.object = 'Transférer : '+this.draft.email.object;
+                    if(this.draft.email.content) this.content = this.draft.email.content;
+                    // if(this.draft.email.files){
+                    //     var f = JSON.parse(this.draft.email.files);
+                    //     var file;
+                    //     for (const data of f) {
+                    //         file = new File(["file:///C:/laragon/www/mailbox/public/storage/"+data.path], data.name);
+                    //         console.log(file);
+                    //         this.files.push(file);
+                    //     }
+                    // }
+                })
+                .catch(err => {
+                    console.error(err);
+                })
             }
-            if(this.email.object) this.object = this.email.object;
-            if(this.email.content) this.content = this.email.content;
         },
 
         updateEmail(){
