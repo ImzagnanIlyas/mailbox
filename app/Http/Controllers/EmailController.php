@@ -192,6 +192,9 @@ class EmailController extends Controller
                 $email->important = $request->state;
                 $email->save();
             }
+            if ($request->show) {
+                return response()->json($emails->first());
+            }
         }elseif ($function == 'setCategory') {
             $emails = UserEmail::findMany($request->ids);
             foreach ($emails as  $email) {

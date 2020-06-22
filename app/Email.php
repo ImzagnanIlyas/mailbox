@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Email extends Model
 {
@@ -72,7 +73,11 @@ class Email extends Model
             $ids = json_decode($this->receivers);
             foreach ($ids as $value) {
                 $user = User::find($value);
-                $string .= substr($user->name, 0, strpos($user->name, " ")).', ';
+                if ($value == Auth::user()->id) {
+                    $string = 'moi, '.$string;
+                }else{
+                    $string .= substr($user->name, 0, strpos($user->name, " ")).', ';
+                }
             }
             if(!$this->cc) $string = substr($string, 0, strrpos($string, ", "));
         }
@@ -80,7 +85,11 @@ class Email extends Model
             $ids = json_decode($this->cc);
             foreach ($ids as $value) {
                 $user = User::find($value);
-                $string .= substr($user->name, 0, strpos($user->name, " ")).', ';
+                if ($value == Auth::user()->id) {
+                    $string = 'moi, '.$string;
+                }else{
+                    $string .= substr($user->name, 0, strpos($user->name, " ")).', ';
+                }
             }
             $string = substr($string, 0, strrpos($string, ", "));
         }

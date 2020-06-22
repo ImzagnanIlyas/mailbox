@@ -4,21 +4,23 @@
         <v-card class="mx-auto">
             <v-card-title>
                 <v-col cols="7" class="font-weight-black">
+                    <button type="button" class="bg-transparent border-0" style="margin-top: -5px;"><i @click="toggleImportant(userEmail.id, userEmail.important)" :class="userEmail.important ? 'fas' : 'far'" class="fa-star" :style="(userEmail.important) ? 'color: gold;' : 'color: gray;'"></i></button>
                     {{email.email.object}}
                 </v-col>
-
-                <v-col class="text-right text-sm">
-                    {{email.email.send_at_full}}
-                </v-col>
+                <v-btn class="ma-2 ml-auto" outlined color="success">
+                    <v-icon small left>fas fa-share</v-icon> Transférer
+                </v-btn>
             </v-card-title>
             <v-card-text>
                 <v-row>
-                    <v-col cols="10">
+                    <v-col cols="9">
                         <p>{{email.sender.name}} - {{email.sender.email}}</p>
+                        <p>À : {{email.email.receivers_names}}</p>
                     </v-col>
 
-                    <v-col cols="2" class="text-right">
-                        <v-btn icon color="indigo" fab x-small>
+                    <v-col cols="3" class="text-right">
+                            {{email.email.send_at_full}}
+                        <!-- <v-btn icon color="indigo" fab x-small>
                             <v-icon>far fa-star</v-icon>
                         </v-btn>
                         <v-btn icon color="indigo" fab x-small>
@@ -26,7 +28,7 @@
                         </v-btn>
                         <v-btn icon color="indigo" fab x-small>
                             <v-icon>fas fa-ellipsis-v</v-icon>
-                        </v-btn>
+                        </v-btn> -->
                     </v-col>
                 </v-row>
                 <v-row>
@@ -54,14 +56,14 @@
                     </v-col>
                 </v-row>
             </v-card-text>
-            <v-card-actions>
+            <!-- <v-card-actions>
                 <v-btn class="ma-2" outlined color="success">
                     <v-icon small left>fas fa-reply</v-icon> Répondre
                 </v-btn>&emsp;
                 <v-btn class="ma-2" outlined color="success">
                     <v-icon small left>fas fa-share</v-icon> Transférer
                 </v-btn>
-            </v-card-actions>
+            </v-card-actions> -->
         </v-card>
     </div>
 </template>
@@ -74,6 +76,8 @@ export default {
     },
     data() {
         return {
+            userEmail: {},
+
             content: '',
             files: JSON.parse(this.email.email.files),
             editorSettings: {
@@ -83,12 +87,10 @@ export default {
             }
         }
     },
-    created(){
-
-    },
     mounted() {
         console.log('show-email component mounted.');
         this.content = this.email.email.content;
+        this.userEmail = this.email;
     },
     methods: {
         download(path){
@@ -98,7 +100,20 @@ export default {
             if(0===a)return"0 Bytes";
             const c=0>b?0:b,d=Math.floor(Math.log(a)/Math.log(1024));
             return parseFloat((a/Math.pow(1024,d)).toFixed(c))+" "+["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"][d]
-        }
+        },
+
+        toggleImportant(emailId ,state){
+            axios.put('/email/toggleImportant?show=1',{
+                state: !state,
+                ids: emailId
+            })
+            .then(res => {
+                this.userEmail = res.data;
+            })
+            .catch(err => {
+                console.error(err);
+            })
+        },
     },
     computed: {
 
