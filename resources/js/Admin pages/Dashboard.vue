@@ -55,7 +55,7 @@
                     { text: 'Deleted', value: 'deleted'},
                     { text: 'Sender', value: 'sender.name'},
                     { text: 'Sender phone', value: 'sender.phone'},
-                    { text: 'Sender post', value: 'sender.post  '},
+                    { text: 'Sender post', value: 'sender.post'},
                 ],
             }
         },

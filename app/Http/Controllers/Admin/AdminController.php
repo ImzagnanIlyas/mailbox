@@ -18,6 +18,6 @@ class AdminController extends Controller
                 return view('Admin/admin');
             }
         }
-        return '<h3>Vous ne pouvez pas accéder à cet espace</h3><a href=/inbox>cliquer ici pour retourner</a>';
+        abort(403,'Vous ne pouvez pas accéder à cet espace');
     }
 }
