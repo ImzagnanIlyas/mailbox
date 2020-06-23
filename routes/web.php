@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('inbox');
 });
 
 Auth::routes();
@@ -29,31 +29,31 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/inbox', function () {
     return view('emails');
-})->name('inbox');
+})->name('inbox')->middleware('auth');
 
 Route::get('/search', function () {
     return view('emails');
-})->name('search');
+})->name('search')->middleware('auth');
 
 Route::get('/important', function () {
     return view('emails');
-})->name('important');
+})->name('important')->middleware('auth');
 
 Route::get('/sent', function () {
     return view('emails');
-})->name('sent');
+})->name('sent')->middleware('auth');
 
 Route::get('/all', function () {
     return view('emails');
-})->name('all');
+})->name('all')->middleware('auth');
 
 Route::get('/archive', function () {
     return view('emails');
-})->name('archive');
+})->name('archive')->middleware('auth');
 
 Route::get('/draft', function () {
     return view('emails');
-})->name('draft');
+})->name('draft')->middleware('auth');
 
 Route::get('/category/{title}', function () {
     $tmp = Auth::user()->categories->firstWhere('id', request()->c);
@@ -66,21 +66,21 @@ Route::get('/category/{title}', function () {
     }else{
         abort(404);
     }
-})->name('category');
+})->name('category')->middleware('auth');
 
 Route::get('/trash', function () {
     return view('emails');
-})->name('trash');
+})->name('trash')->middleware('auth');
 
 
 /**
  * Email routes
  */
 
-Route::resource('/email', 'EmailController');
-Route::resource('/new-email', 'NewEmailController')->only(['index', 'store', 'update', 'destroy']);
-Route::resource('/show-email', 'ShowEmailController');
-Route::post('/create-category', 'EmailController@storeCategory');
+Route::resource('/email', 'EmailController')->middleware('auth');
+Route::resource('/new-email', 'NewEmailController')->only(['index', 'store', 'update', 'destroy'])->middleware('auth');
+Route::resource('/show-email', 'ShowEmailController')->middleware('auth');
+Route::post('/create-category', 'EmailController@storeCategory')->middleware('auth');
 
 Route::any('/admin/{any?}', 'Admin\AdminController@index')->where('any', '.*')->middleware('auth');
 
