@@ -14,6 +14,7 @@
                             label="Name"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
 
@@ -23,6 +24,7 @@
                             label="Birthday"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
 
@@ -32,6 +34,7 @@
                             label="E-mail"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
 
@@ -41,6 +44,7 @@
                             label="Gender"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
 
@@ -50,6 +54,7 @@
                             label="Phone"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
 
@@ -59,6 +64,7 @@
                             label="Post"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
@@ -67,6 +73,7 @@
                             label="Service"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
 
@@ -76,6 +83,7 @@
                             label="Role"
                             outlined
                             shaped
+                            readonly
                         ></v-text-field>
                         </v-col>
                     </v-row>

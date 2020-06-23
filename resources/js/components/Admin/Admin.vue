@@ -43,12 +43,12 @@
                     <v-list-item-title>Permissions</v-list-item-title>
                 </v-list-item> -->
 
-                <v-list-item color="teal" class="text-decoration-none" exact to="/admin/activities">
+                <!-- <v-list-item color="teal" class="text-decoration-none" exact to="/admin/activities">
                     <v-list-item-icon>
                         <v-icon>fa-chart-line</v-icon>
                     </v-list-item-icon>
                     <v-list-item-title>Activities</v-list-item-title>
-                </v-list-item>
+                </v-list-item> -->
 
                 <v-list-item color="teal" class="text-decoration-none" exact to="/admin/settings">
                     <v-list-item-icon>

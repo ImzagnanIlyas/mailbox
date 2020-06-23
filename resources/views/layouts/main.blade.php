@@ -78,7 +78,7 @@
                         <img src="{{ asset('img/user.png') }}" alt="user img" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow bg-primary"></a>
                         <div aria-labelledby="userInfo" class="dropdown-menu">
                             <a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">{{ Auth::user()->name }}</strong><small>{{ Auth::user()->post }}</small></a>
-                            {{-- <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Réglages</a><a href="#" class="dropdown-item">Journal d'activité</a> --}}
+                            <div class="dropdown-divider"></div><a href="/admin" class="dropdown-item">Espace administrateur</a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"class="dropdown-item">
                                 <i class="fas fa-sign-out-alt text-gray-400"></i>&nbsp;Se déconnecter
