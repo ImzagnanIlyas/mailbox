@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\UserEmail;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class EmailController extends Controller
 {
@@ -14,7 +16,7 @@ class EmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $section = request()->section;
         if ($section == '/inbox') {
@@ -31,23 +33,58 @@ class EmailController extends Controller
             );
         }elseif ($section == '/search') {
             $q = request()->q;
-            return response()->json(
-                UserEmail::select('user_emails.*','emails.send')
+            // return response()->json(
+            //     UserEmail::select('user_emails.*','emails.send')
+            //         ->join('emails','emails.id', '=', 'user_emails.email_id')
+            //         ->join('users','users.id', '=', 'emails.user_id')
+            //         ->with('user', 'email', 'category')
+            //         ->where('user_emails.user_id', Auth::user()->id)
+            //         ->whereIn('state', ['received', 'read'])
+            //         ->whereTrashed(false)
+            //         ->where(function($query) {
+            //             $query->where('users.name', 'like', '%'.request()->q.'%')
+            //                 ->orWhere('emails.object', 'like', '%'.request()->q.'%')
+            //                 ->orWhere('emails.content', 'like', '%'.request()->q.'%');
+            //         })
+            //         ->orderByDesc('send')
+            //         ->paginate(10)
+            // );
+            $list = UserEmail::select('user_emails.*','emails.send')
                     ->join('emails','emails.id', '=', 'user_emails.email_id')
                     ->join('users','users.id', '=', 'emails.user_id')
                     ->with('user', 'email', 'category')
                     ->where('user_emails.user_id', Auth::user()->id)
-                    ->whereIn('state', ['received', 'read'])
-                    ->whereArchived(false)
+                    ->whereIn('state', ['sent','received', 'read'])
                     ->whereTrashed(false)
-                    ->where(function($query) {
-                        $query->where('users.name', 'like', '%'.request()->q.'%')
-                            ->orWhere('emails.object', 'like', '%'.request()->q.'%')
-                            ->orWhere('emails.content', 'like', '%'.request()->q.'%');
-                    })
                     ->orderByDesc('send')
-                    ->paginate(10)
-            );
+                    ->get()
+                    ->filter(function($record) use ($q){
+                        return (strpos($record->email->content,$q) !== false
+                                || strpos($record->email->object,$q) !== false
+                                || strpos($record->sender->name,$q) !== false
+                                ) ? $record : null;
+                        // if (strpos($record->email->content,$q) !== false) {
+                        //     return $record;
+                        // }
+                        // if (strpos($record->email->object,$q) !== false) {
+                        //     return $record;
+                        // }
+                        // if (strpos($record->sender->name,$q) !== false) {
+                        //     return $record;
+                        // }
+                        // return null;
+                    });
+            $count = count($list);
+            $page = (request('page'))?:1;
+            $rpp =  10; //(request('perPage'))?:50;
+            $offset = $rpp * ($page - 1);
+            $paginator = new LengthAwarePaginator($list->slice($offset,$rpp),$count,$rpp,$page,[
+                'path'  => $request->url(),
+                'query' => $request->query(),
+            ]);
+
+            return response()->json($paginator);
+
         }elseif ($section == '/important') {
             return response()->json(
                 UserEmail::select('user_emails.*','emails.send')

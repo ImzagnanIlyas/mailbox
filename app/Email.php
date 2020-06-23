@@ -3,8 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class Email extends Model
 {
@@ -23,6 +25,22 @@ class Email extends Model
     public function replies()
     {
         return $this->hasMany('Email', 'email_id');
+    }
+
+    public function getContentAttribute($value)
+    {
+        // return Crypt::decrypt($value);
+        try {
+            $decrypted = Crypt::decrypt($value);
+        } catch (DecryptException $e) {
+            $decrypted = $value;
+        }
+        return $decrypted;
+    }
+
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = Crypt::encrypt($value);
     }
 
     /**
