@@ -123,16 +123,16 @@
         <!-- Theme color -->
         <button type="button" data-toggle="collapse" data-target="#style-switch" id="style-switch-button" class="btn btn-primary btn-sm d-none d-lg-inline-block p-3 collapsed" aria-expanded="false"><i class="fa fa-cog"></i> <span>Changer la couleur du thème</span></button>
         <div id="style-switch" class="collapse">
-            <h5 class="mb-4">Select theme colour</h5>
+            <h5 class="mb-4">Sélectionnez la couleur</h5>
             <form class="mb-4">
                 <select name="colour" id="colour" class="form-control">
-                <option value="">select colour variant</option>
-                <option value="default">blue</option>
-                <option value="pink">pink</option>
+                <option value=""></option>
+                <option value="default">bleu</option>
+                <option value="pink">rose</option>
                 <option value="violet">violet</option>
                 <option value="sea">sea</option>
-                <option value="red">red</option>
-                <option value="green">green</option>
+                <option value="red">rouge</option>
+                <option value="green">vert</option>
                 </select>
             </form>
         </div>

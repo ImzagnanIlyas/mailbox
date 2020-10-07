@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    Boîte de réception
+    Mailbox
 @endsection
 
 
